@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farez | Work & Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:italic@0;1&family=Inter:wght@400;500;700;800&display=swap');
+        
+        body {
+            background: #f6f6f3;
+            font-family: 'Inter', sans-serif;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        .serif { font-family: 'Instrument Serif', serif; }
+
+        .navbar {
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+           
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 3.5rem; 
+            font-weight: 500;
+            font-size: 1.7rem; 
+            text-transform: none; 
+            letter-spacing: -0.02em;
+        }
+
+        .nav-menu a {
+            position: relative;
+            color: #1a1a1a;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: currentColor;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.4s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .nav-menu a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        #navLogo svg {
+            transition: transform 0.3s ease;
+        }
+
+        #navLogo:hover svg {
+            transform: scale(1.05);
+        }
+
+        header.main-header {
+            margin-top: 4rem; 
+            margin-bottom: 6rem;
+            padding-left: 5%; 
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal-text {
+    animation: revealUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes revealUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+       /* --- PERBAIKAN CSS SLIDER --- */
+.relative.group.overflow-hidden {
+    background: #000; /* Pastikan background dasar hitam agar tidak bocor putih */
+}
+
+.slider-container {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1); /* Transisi lebih smooth */
+    width: 100%;
+    will-change: transform;
+}
+
+.slide-item {
+    flex: 0 0 100%; /* Memastikan setiap slide selebar 100% container */
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.slide-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.6); /* Gambar tidak terlalu gelap saat idle */
+    transition: all 1s ease;
+}
+
+/* Saat di-hover, gambar slide yang aktif akan berwarna */
+.group:hover .slide-item img {
+    filter: grayscale(0%) brightness(1);
+}
+
+/* Memastikan dot navigasi terlihat jelas */
+.dot {
+    height: 3px;
+    background-color: rgba(255,255,255,0.2);
+    transition: all 0.4s ease;
+}
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            padding: 40px 0;
+            cursor: pointer;
+        }
+
+        .marquee-container::before, .marquee-container::after {
+            content: "";
+            position: absolute;
+            top: 0; width: 15vw; height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .marquee-container::before { left: 0; background: linear-gradient(to right, #f6f6f3, transparent); }
+        .marquee-container::after { right: 0; background: linear-gradient(to left, #f6f6f3, transparent); }
+
+        .marquee-content {
+            display: flex;
+            gap: 40px;
+            width: max-content;
+            animation: scroll 50s linear infinite;
+        }
+
+        .marquee-content:hover {
+            animation-play-state: paused;
+        }
+
+        .cert-item {
+            width: 400px;
+            flex-shrink: 0;
+        }
+
+        .cert-item img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .cert-item:hover img {
+            filter: grayscale(0%);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .category-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            border-bottom: 1px solid #1a1a1a;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .work-card img {
+            filter: grayscale(100%);
+            transition: all 0.6s ease;
+        }
+        .work-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        .site-footer {
+            background-color: #efefec; 
+            color: #1a1a1a;
+            padding: 80px 5% 40px;
+            margin-top: 100px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            width: 100%;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        .footer-brand h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+
+        .footer-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #888;
+            margin-bottom: 20px;
+            display: block;
+            font-weight: 700;
+        }
+
+        .footer-nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-nav-list li {
+            margin-bottom: 12px;
+        }
+
+        .footer-nav-list a {
+            color: #444;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-nav-list a:hover {
+            color: #3b82f6;
+        }
+
+        .social-wrapper {
+            display: flex;
+            gap: 15px;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            justify-content: center;
+        }
+
+        .social-item {
+            width: 42px;
+            height: 42px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a1a1a;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .social-item:hover {
+            background-color: #1a1a1a;
+            color: #fff;
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .footer-container { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body class="px-6 py-12 md:px-20 md:py-20">
+
+    <nav class="navbar" id="mainNav">
+        <div class="logo" id="navLogo">
+            <a href="home.html" class="block cursor-pointer">
+                <svg width="200" height="60" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 30L18 10L28 30" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                    <path d="M14 30L24 10L34 30" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+                    <line x1="6" y1="24" x2="36" y2="24" stroke="currentColor" stroke-width="2.5"/>
+                    <text x="45" y="28" font-family="serif" font-weight="800" font-size="22" fill="currentColor">Farez</text>
+                    <circle cx="108" cy="18" r="3.5" fill="#3b82f6"/>
+                </svg>
+            </a>
+        </div>
+        
+        <div class="nav-menu">
+            <a href="about.html">About me</a>
+            <a href="work.html">My work</a>
+        </div>
+    </nav>
+
+    <header class=" main-header mb-32">
+        <h1 class="serif text-7xl md:text-9xl italic leading-[0.9] reveal-text">Archives &</h1>
+    <h1 class="serif text-7xl md:text-9xl leading-[0.9] ml-0 md:ml-32 reveal-text">
+        Milestones<span class="text-blue-500">.</span>
+    </h1>
+    </header>
+
+    <main class="space-y-40">
+    
+    <section class="reveal">
+        <div class="flex justify-between items-end mb-8 px-0">
+            <div>
+                <h2 class="category-tag">01. Spiritual Journey & Achievements</h2>
+                <h3 class="serif text-5xl italic">Certificates of Excellence</h3>
+            </div>
+            <p class="text-xs text-gray-400 italic hidden md:block">Hover to focus & pause</p>
+        </div>
+
+        <div class="marquee-container -mx-6 md:-mx-20" id="marquee">
+            <div class="marquee-content" id="marquee-content">
+                <div class="cert-item"><img src="sert1.jpeg" alt="Sertifikat"><p class="cert-label">Matan Ushulu Tsalatsah </p></div>
+                <div class="cert-item"><img src="sert2.jpeg" alt="Sertifikat"><p class="cert-label">Matan Al-Jurumiah</p></div>
+                <div class="cert-item"><img src="sert3.jpeg" alt="Sertifikat"><p class="cert-label">Tahfidz 13 Juz</p></div>
+                <div class="cert-item"><img src="sert4.jpeg" alt="Sertifikat"><p class="cert-label">Kitab Bidayah Fii Ilmi Shorf</p></div>
+                <div class="cert-item"><img src="sert5.jpeg" alt="Sertifikat"><p class="cert-label">Matan Qowaidul Arba'</p></div>
+                <div class="cert-item"><img src="sert6.jpeg" alt="Sertifikat"><p class="cert-label">Mandzumah Ahsanil Akhlaq</p></div>
+                <div class="cert-item"><img src="sert7.jpeg" alt="Sertifikat"><p class="cert-label">Kitab Amtsilah Al-I'raabiyyah</p></div>
+                <div class="cert-item"><img src="sert9.jpeg" alt="Sertifikat"><p class="cert-label">Ma'ani Qur'an Juz 1</p></div>
+                <div class="cert-item"><img src="sert11.jpeg" alt="Sertifikat"><p class="cert-label">Ma'ani Qur'an Juz 2</p></div>
+                <div class="cert-item"><img src="sert8.jpeg" alt="Sertifikat"><p class="cert-label">Ma'ani Qur'an Juz 3</p></div>
+                <div class="cert-item"><img src="sert10.jpeg" alt="Sertifikat"><p class="cert-label">Hafalan Ribuan Mufradat Kitab Fathul Qarib</p></div>
+                <div class="cert-item"><img src="sert12.jpeg" alt="Sertifikat"><p class="cert-label">Hafalan Mandzumah Nawaqidul Islam Durasi 30 detik</p></div>
+                <div class="cert-item"><img src="sert13.jpeg" alt="Sertifikat"><p class="cert-label">Kitab Nadzmul Maqshud</p></div>
+                <div class="cert-item"><img src="sert14.jpeg" alt="Sertifikat"><p class="cert-label">Kitab Tashilat An-Nahwiyayah</p></div>
+                <div class="cert-item"><img src="sert15.jpeg" alt="Sertifikat"><p class="cert-label">Kitab Alfiyah Ibnu Malik</p></div>
+                <div class="cert-item"><img src="sert16.jpeg" alt="Sertifikat"><p class="cert-label">Participant in International Exlusive Event</p></div>
+            </div>
+        </div>
+    </section>
+
+        <section class="reveal">
+    <div class="flex justify-between items-end mb-8">
+        <div>
+            <h2 class="category-tag" id="sociall">02. Social Impact</h2>
+            <h3 class="serif text-5xl italic">Community & Growth</h3>
+        </div>
+    </div>
+    
+    <div class="relative group overflow-hidden bg-[#1a1a1a] rounded-sm shadow-2xl">
+        
+        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center border border-white/20 rounded-full bg-black/20 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white hover:text-black">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        
+        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 flex items-center justify-center border border-white/20 rounded-full bg-black/20 text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white hover:text-black">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        <div class="slider-container" id="socialSlider">
+    <div class="slide-item aspect-[16/10] md:aspect-[21/9]">
+        <img src="safari dakwah ramadhan.jpeg" alt="Bakti Sosial">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 md:p-16 w-full z-10">
+            <p class="text-xs uppercase tracking-[0.3em] text-blue-400 font-bold mb-3">Volunteer Work — 2026</p>
+            <h4 class="serif text-4xl md:text-6xl text-white italic">Safari Dakwah Ramadhan</h4>
+            <p class="serif text-4xl md:text-xl text-white ">"Aktif Sebagai Fasilitator Safari Dakwah Ramadhan</p>
+        </div>
+    </div>
+    
+    <div class="slide-item aspect-[16/10] md:aspect-[21/9]">
+        <img src="peduli sumatra.jpeg" alt="Environment">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 md:p-16 w-full z-10">
+            <p class="text-xs uppercase tracking-[0.3em] text-blue-400 font-bold mb-3">Volunteer Work — 2025</p>
+            <h4 class="serif text-4xl md:text-6xl text-white italic">Aksi Peduli Sumatra</h4>
+             <p class="serif text-4xl md:text-xl text-white ">"Orasi Peduli Sumatra</p>
+        </div>
+    </div>
+
+    <div class="slide-item aspect-[16/10] md:aspect-[21/9]">
+        <img src="Event Omatiq YM.jpeg" alt="Social Impact">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 md:p-16 w-full z-10">
+            <p class="text-xs uppercase tracking-[0.3em] text-blue-400 font-bold mb-3">Volunteer Work — 2025</p>
+            <h4 class="serif text-4xl md:text-6xl text-white italic">OMATIQ Yayasan Yatim Mandiri</h4>
+            <p class="serif text-4xl md:text-xl text-white ">"Sebagai Operator Layar Event OMATIQ YM</p>
+        </div>
+    </div>
+    <div class="slide-item aspect-[16/10] md:aspect-[21/9]">
+        <img src="reuni akbar IAIN bone.jpeg" alt="Social Impact">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 md:p-16 w-full z-10">
+            <p class="text-xs uppercase tracking-[0.3em] text-blue-400 font-bold mb-3">Volunteer Work — 2026</p>
+            <h4 class="serif text-4xl md:text-6xl text-white italic">Kolaborasi Reuni IAIN Bone</h4>
+        </div>
+    </div>
+</div>
+</div>
+        <div class="absolute bottom-6 right-8 flex gap-2 z-30">
+            <div class="dot w-8 h-[2px] bg-white/30 transition-all duration-300"></div>
+            <div class="dot w-8 h-[2px] bg-white/30 transition-all duration-300"></div>
+            <div class="dot w-8 h-[2px] bg-white/30 transition-all duration-300"></div>
+        </div>
+    </div>
+</section>
+
+        <section class="pb-20">
+            <h2 class="category-tag" id="teknik">03. Digital Solutions</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+                <div class="work-card reveal">
+                    <div class="overflow-hidden bg-[#1a1a1a] p-10 aspect-square flex justify-center">
+                        <img src="Nothing.jpeg" alt="Project 1" class="shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="serif text-3xl italic">Processing...</h3>
+                        <p class="text-gray-500 text-sm mt-2">Dibuat menggunakan Tailwind dan Laravel.</p>
+                    </div>
+                </div>
+                <div class="work-card reveal" style="transition-delay: 0.2s;">
+                    <div class="overflow-hidden bg-[#1a1a1a] p-10 aspect-square flex justify-center">
+                        <img src="Nothing.jpeg" alt="Project 2" class="shadow-2xl grayscale hover:grayscale-0 transition-all duration-700">
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="serif text-3xl italic">Processing...</h3>
+                        <p class="text-gray-500 text-sm mt-2">Experimen dengan ESP8266.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h2>Al-Farezy<span class="text-blue-500">.</span></h2>
+            <p class="text-sm text-gray-500 max-w-xs leading-relaxed mb-8">
+                Mendedikasikan diri pada perpaduan antara teknologi, nilai spiritual, dan dampak sosial yang nyata.
+            </p>
+            <div class="space-y-2">
+                <span class="footer-label">Hubungi Saya</span>
+                <p class="font-bold text-lg">naufalnursiqih@gmail.com</p>
+                <p class="text-gray-500 text-sm">Makassar, Indonesia</p>
+            </div>
+        </div>
+
+        <div>
+            <span class="footer-label">Kategori Fokus</span>
+            <ul class="footer-nav-list">
+                <li><a href="#teknik">Programming</a></li>
+                <li><a href="#teknik">IoT & Embedded System</a></li>
+                <li><a href="#marquee">Religious Studies</a></li>
+                <li><a href="#sociall">Social Volunteering</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <span class="footer-label">Tautan Utama</span>
+            <ul class="footer-nav-list">
+                <li><a href="home.html">Beranda</a></li>
+                <li><a href="about.html">Tentang Saya</a></li>
+                <li><a href="work.html">My Work</a></li>
+                <li><a href="#">Kontak</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="social-wrapper">
+        <a href="#" class="social-item">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c2.44 4.51 5.87 7.94 10.39 10.39l2.21-2.21c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V23c0 .55-.45 1-1 1-13.25 0-24-10.75-24-24 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.22z"/></svg>
+        </a>
+        <a href="mailto:naufalnursiqih@gmail.com" class="social-item">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+        <a href="#" class="social-item">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+        <a href="https://instagram.com/alfarezyyyy__/" class="social-item">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+    </div>
+
+    <div class="text-center mt-10">
+        <p class="text-[10px] text-gray-400 uppercase tracking-widest">
+            © 2026 Al-Farezy. Built with faith & code.
+        </p>
+    </div>
+</footer>
+
+    <style>
+    .cert-label {
+        @apply mt-4 text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold text-center;
+    }
+</style>
+
+<script>
+    const content = document.getElementById('marquee-content');
+    content.innerHTML += content.innerHTML; 
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const slider = document.getElementById('socialSlider');
+const dots = document.querySelectorAll('.dot');
+let currentIndex = 0;
+const slides = document.querySelectorAll('.slide-item');
+const totalSlides = slides.length;
+
+function updateSlider() {
+    // Menggeser kontainer berdasarkan index
+    const offset = currentIndex * 100;
+    slider.style.transform = `translateX(-${offset}%)`;
+    
+    // Update tampilan dots
+    dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+            dot.style.backgroundColor = '#3b82f6'; // Warna biru aktif
+            dot.style.width = '40px';
+            dot.style.opacity = '1';
+        } else {
+            dot.style.backgroundColor = 'rgba(255,255,255,0.3)';
+            dot.style.width = '20px';
+            dot.style.opacity = '0.5';
+        }
+    });
+}
+
+// Tambahkan pengecekan klik agar timer reset setiap kali user klik tombol
+function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateSlider();
+    resetTimer();
+}
+
+function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateSlider();
+    resetTimer();
+}
+</script>
+</body>
+</html>
